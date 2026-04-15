@@ -5,7 +5,12 @@ build/
 dist/
 wheels/
 *.egg-info
-.env
-*.env
+
 # Virtual environments
-.venv
+.venv/
+venv/
+
+# Env files
+.env
+.env.*
+*.env
