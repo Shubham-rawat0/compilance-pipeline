@@ -26,7 +26,7 @@ class VideoIndexerService:
             return token_object.token
         
         except Exception as e:
-            logger.error(f"failed to get axure token, {e}")
+            logger.error(f"failed to get axure token {e}")
             raise
 
     def get_account_token(self,arm_access_token):
@@ -49,7 +49,7 @@ class VideoIndexerService:
     
     def download_youtube_video(self,url , output_path):
 
-        logger.info("downloading yt video",url)
+        logger.info(f"downloading yt video {url}")
 
         ydl_opts = {
             'format': 'best',

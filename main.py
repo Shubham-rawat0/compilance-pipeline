@@ -1,5 +1,6 @@
 import uuid
 import json
+import sys
 import logging
 from pprint import pprint
 from dotenv import load_dotenv
@@ -13,13 +14,13 @@ logging.basicConfig(
 
 logger = logging.getLogger("compliance-runner")
 
-def run_cli_simulation():
+def run_cli_simulation(video_url):
 
     session_id = str(uuid.uuid4())
     logger.info(f"starting Audit session : {session_id}")
 
     initial_inputs = {
-        "video_url" : "",
+        "video_url" : video_url,
         "video_id" : f"vid_{session_id[:8]}",
         "compliance_results" : [],
         "errors" : []
@@ -33,19 +34,23 @@ def run_cli_simulation():
         print("workflow execution complete")
 
         print("compliance audit report----------------------------")
-        print(f"video id : {final_state.get("video_id")}")
-        print(f"status : {final_state.get("final_status")}")
+        print(f"video id : {final_state.get('video_id')}")
+        print(f"status : {final_state.get('final_status')}")
         results = final_state.get("compliance_results",[])
 
         if results:
             for issue in results:
-                print(f"-[{issue.get("severity")}] [{issue.get("category")}] : [{issue.get("description")}]")
+                print(f'-[{issue.get("severity")}] [{issue.get("category")}] : [{issue.get("description")}]')
 
         else:
-            print("No voilations detected")
+            print("No violations detected")
         
     except Exception as e:
         logger.error(f"workflow execution failed : {e}")
 
 if __name__ == "__main__":
-    run_cli_simulation()
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <video_url>")
+        exit(1)
+
+    run_cli_simulation(sys.argv[1])
