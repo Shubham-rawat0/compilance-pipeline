@@ -129,7 +129,7 @@ def audio_content_node(state:VideoAuditState)->Dict[str,Any]:
         content = reponse.content
 
         if "```" in content:
-            content = re.search(r"```(?:json)?(.?)```", content , re.DOTALL).group(1)
+            content = re.search(r"```(?:json)?(.*?)```", content, re.DOTALL)
 
         audit_data = json.loads(content.strip())
 

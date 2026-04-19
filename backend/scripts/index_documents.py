@@ -104,17 +104,17 @@ def index_docs():
         except Exception as e:
             logger.error(f"Failed to process {pdf_path} : {e}")
         
-        if all_splits:
+    if all_splits:
             logger.info(f"Uploading {len(all_splits)} chunks to azure AI search index ")
 
             try:
-                vector_store.add_documents(documnets=all_splits)
+                vector_store.add_documents(documents=all_splits)
                 logger.info("indexing complete")
 
             except Exception as e:
                 logger.error("failed to upload the documents to azure serach",e)
 
-        else:
+    else:
             logger.warning("No documents were processed")
 
 if __name__ == "__main__":
